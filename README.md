@@ -5,8 +5,8 @@ cmake -Bbuild -GNinja
 ninja -C build
 ```
 
-Or just do `nix build` if you have `nix` with `--experimental-features
-nix-command`.
+Or just do `nix build --keep-failed` if you have `nix` with the option
+`--experimental-features nix-command`.
 
 The expected output is an error for the last two cases, and everything else
 linking.
@@ -36,4 +36,11 @@ FAILED: test_should_error
 b.c:(.text+0x0): multiple definition of `answer'; libA.a(a.c.o):a.c:(.text+0x0): first defined here
 collect2: error: ld returned 1 exit status
 ninja: build stopped: subcommand failed.
+```
+If you test the first two executables (e.g. by using --keep-failed) you get
+```
+$ ./build/test_a_first
+The answer: 42
+$ ./build/test_b_first
+The answer: -1
 ```
